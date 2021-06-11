@@ -1,3 +1,9 @@
+variable "apply_immediately" {
+  type        = bool
+  description = "Wheter any database modifications are applied immediatly"
+  default     = false
+}
+
 variable "at_rest_encryption_enabled" {
   type        = bool
   description = "Whether to enable encryption at rest"

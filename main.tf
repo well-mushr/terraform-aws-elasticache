@@ -20,6 +20,7 @@ resource "aws_elasticache_cluster" "main" {
   port                         = var.port
   security_group_ids           = var.security_group_ids
   subnet_group_name            = var.subnet_group_name
+  apply_immediately            = var.apply_immediately
   tags                         = var.tags
 }
 
@@ -49,6 +50,7 @@ resource "aws_elasticache_replication_group" "main" {
   snapshot_retention_limit      = var.snapshot_retention_limit
   snapshot_window               = var.snapshot_window
   subnet_group_name             = var.subnet_group_name
+  apply_immediately             = var.apply_immediately
   tags                          = var.tags
 
   dynamic "cluster_mode" {
