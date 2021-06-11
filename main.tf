@@ -1,7 +1,7 @@
 locals {
   memcached_cluster = var.create_elasticache && var.engine == "memcached"
-  redis_cluster     = var.create_elasticache && var.engine == "redis" && (var.cluster_size > 1 || var.cluster_mode_enabled)
-  single_node_redis = var.create_elasticache && var.engine == "redis" && (var.cluster_size == 1 && ! var.cluster_mode_enabled)
+  redis_cluster     = var.create_elasticache && var.engine == "redis" && (var.cluster_size > 1 || var.cluster_mode)
+  single_node_redis = var.create_elasticache && var.engine == "redis" && (var.cluster_size == 1 && ! var.cluster_mode)
 }
 
 resource "aws_elasticache_cluster" "main" {
@@ -34,7 +34,7 @@ resource "aws_elasticache_replication_group" "main" {
   engine                        = var.engine
   engine_version                = var.engine_version
   node_type                     = var.node_type
-  number_cache_clusters         = var.cluster_mode_enabled ? null : var.cluster_size
+  number_cache_clusters         = var.cluster_mode ? null : var.cluster_size
   parameter_group_name          = var.parameter_group_name
   port                          = var.port
   at_rest_encryption_enabled    = var.at_rest_encryption_enabled
@@ -54,7 +54,7 @@ resource "aws_elasticache_replication_group" "main" {
   tags                          = var.tags
 
   dynamic "cluster_mode" {
-    for_each = var.cluster_mode_enabled ? ["true"] : []
+    for_each = var.cluster_mode ? ["true"] : []
 
     content {
       replicas_per_node_group = var.cluster_mode_replicas_per_node_group

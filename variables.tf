@@ -40,7 +40,7 @@ variable "create_elasticache" {
   default     = true
 }
 
-variable "cluster_mode_enabled" {
+variable "cluster_mode" {
   type        = bool
   description = "Create a native Redis Cluster"
   default     = false
